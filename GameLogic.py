@@ -16,7 +16,9 @@ class GameLogic:
         self.tabla[crd_soarece] = GameLogic.SOARECE
         print(self.tabla)
 
-    def get_mouse_moves(self):
+    def get_mouse_moves(self,criteriu=None):
+        if criteriu is None:
+            criteriu = [GameLogic.SPATIU,GameLogic.VIZITAT]
 
         if self.crd_soarece[0] % 2 == 1:
             move_x = [-1, -1, 0, 0, 1, 1]
@@ -29,7 +31,7 @@ class GameLogic:
         for x, y in zip(move_x, move_y):
             x, y = self.crd_soarece + np.asarray([x, y])
 
-            if self.valid_move(x, y, [GameLogic.SPATIU,GameLogic.VIZITAT]):
+            if self.valid_move(x, y, criteriu):
                 valid_move.append((x, y))
 
         return valid_move
@@ -63,6 +65,10 @@ class GameLogic:
         return None
 
     def random_logic(self, mutari_posibile, nr_mutari):
+        better_moves = self.get_mouse_moves([GameLogic.SPATIU])
+        if len(better_moves) > 0 :
+            nr_mutari = len(better_moves)
+            mutari_posibile = better_moves
 
         mutare_id = np.random.randint(0, nr_mutari)
         mutare = mutari_posibile[mutare_id]
