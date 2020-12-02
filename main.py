@@ -1,5 +1,8 @@
 from constants import *
 from utilitare import *
+from Imagine import Imagine
+from GameLogic import *
+
 import time
 # Import and initialize the pygame library
 import pygame
@@ -9,12 +12,20 @@ pygame.init()
 # Set up the drawing window
 screen = pygame.display.set_mode([GAME_WIDTH, GAME_HIGHT])
 
-r = 30
-p = (250, r)
+r = R
+p = [250, r]
+
+poza_soarece = pygame.image.load("resurse/rat.png")
+poza_soarece = pygame.transform.scale(poza_soarece, (52, 52))
 
 tabla = generate_table(p, r)
-droweble_table = []
 
+soarece = Imagine(
+    poza_soarece,
+    tabla[NUMAR_LINII // 2, NUMAR_COLOANE // 2]
+)
+
+droweble_table = []
 for line in tabla:
     for hex in line:
         p = [
@@ -34,6 +45,8 @@ menu_area = [
     (300, game_area[1][1])
 ]
 
+clock = pygame.time.Clock()
+clock.tick(30)
 
 # 33333333333333333333333333333333333333333333333333333333333333333333
 # smallfont = pygame.font.SysFont('Corbel', 35)
@@ -46,12 +59,13 @@ menu_area = [
 # 333333333333333333333333333333333333333333333333333333333333333333333333333
 
 
+
+
 def draw(screen):
     # Fill the background with white
     screen.fill(WHITE)
-    # Draw a solid blue circle in the center
-    # pygame.draw.circle(screen, BLUE, circle_center , 75)
 
+    # Deseneaza tabla
     for value in droweble_table:
         for poly, culoare in value:
             pygame.draw.polygon(screen, culoare, poly)
@@ -61,16 +75,23 @@ def draw(screen):
 
     pygame.draw.circle(screen, RED, menu_area[0], r * 0.95)
 
+    # Deseneaza soarece
+    screen.blit(soarece.img, soarece.get_pos_2_draw())
+
+
+
     # screen.blit(text,  menu_area[0 ])
 
     pygame.display.flip()
+    clock.tick(60)
 
 
 # Run until the user asks to quit
 running = True
 
-def game_table_click(tabla  ,mouse_pozition):
-    global  r
+p = [NUMAR_LINII // 2, NUMAR_COLOANE // 2]
+def game_table_click(tabla, mouse_pozition):
+    global r ,p
 
     poz = get_chenar(tabla, mouse_pozition, r)
     if poz is not None:
@@ -79,7 +100,10 @@ def game_table_click(tabla  ,mouse_pozition):
         hexagon = droweble_table[poz][0][0]
         hexagon1 = droweble_table[poz][1][0]
         print(hexagon)
-        droweble_table[poz] = [(hexagon, RED) , (hexagon1,(255,165,0) )]
+        droweble_table[poz] = [(hexagon, RED), (hexagon1, (255, 165, 0))]
+
+        p = update_pozitie_soarece(p, None)
+        soarece.position = tabla[p[0], p[1]]
 
 
 while running:
@@ -92,13 +116,13 @@ while running:
             mouse_pozition = pygame.mouse.get_pos()
 
             if game_area[0][0] < mouse_pozition[0] < game_area[0][0] + game_area[1][0] \
-                    and game_area[0][1] < mouse_pozition[0] < game_area[1][1]+ game_area[1][1]:
-                    game_table_click(tabla , mouse_pozition)
+                    and game_area[0][1] < mouse_pozition[0] < game_area[1][1] + game_area[1][1]:
+                game_table_click(tabla, mouse_pozition)
 
 
 
 
-        draw(screen)
+    draw(screen)
 
 # print(pygame.mouse.get_pos())
 # time.sleep(SOMN)
