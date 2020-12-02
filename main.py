@@ -2,7 +2,7 @@ from constants import *
 from utilitare import *
 from Imagine import Imagine
 from GameLogic import *
-
+import sys
 import time
 # Import and initialize the pygame library
 import pygame
@@ -46,19 +46,8 @@ menu_area = [
 ]
 
 clock = pygame.time.Clock()
-clock.tick(30)
 
-# 33333333333333333333333333333333333333333333333333333333333333333333
-# smallfont = pygame.font.SysFont('Corbel', 35)
-
-# rendering a text written in
-# this font
-# text = smallfont.render('quit', True, BLACK)
-
-
-# 333333333333333333333333333333333333333333333333333333333333333333333333333
-
-
+game_state = GameLogic()
 
 
 def draw(screen):
@@ -78,33 +67,48 @@ def draw(screen):
     # Deseneaza soarece
     screen.blit(soarece.img, soarece.get_pos_2_draw())
 
-
-
     # screen.blit(text,  menu_area[0 ])
 
     pygame.display.flip()
     clock.tick(60)
 
 
-# Run until the user asks to quit
-running = True
-
-p = [NUMAR_LINII // 2, NUMAR_COLOANE // 2]
 def game_table_click(tabla, mouse_pozition):
-    global r ,p
+    global r
 
     poz = get_chenar(tabla, mouse_pozition, r)
     if poz is not None:
-        poz = poz[0] * NUMAR_COLOANE + poz[1]
+        x, y = poz
+        # aux for debug
+        #moves = game_state.get_mouse_moves()
+        #
+        # for x, y in moves:
+        #     poz1 = x * NUMAR_COLOANE + y
+        #
+        #     hexagon = droweble_table[poz1][0][0]
+        #     hexagon1 = droweble_table[poz1][1][0]
+        #     droweble_table[poz1] = [(hexagon, BLUE), (hexagon1, (0, 0, 165))]
 
-        hexagon = droweble_table[poz][0][0]
-        hexagon1 = droweble_table[poz][1][0]
-        print(hexagon)
-        droweble_table[poz] = [(hexagon, RED), (hexagon1, (255, 165, 0))]
+        if game_state.build_wall(x, y):
+            poz = poz[0] * NUMAR_COLOANE + poz[1]
 
-        p = update_pozitie_soarece(p, None)
-        soarece.position = tabla[p[0], p[1]]
+            hexagon = droweble_table[poz][0][0]
+            hexagon1 = droweble_table[poz][1][0]
+            droweble_table[poz] = [(hexagon, RED), (hexagon1, (255, 165, 0))]
 
+            status = play_ai(game_state)
+            if type(status) == str:
+                print(status)
+                sys.exit(0)
+
+            x, y = status
+            soarece.position = tabla[x, y]
+
+            print(game_state.tabla)
+
+
+# Run until the user asks to quit
+running = True
 
 while running:
 
@@ -118,9 +122,6 @@ while running:
             if game_area[0][0] < mouse_pozition[0] < game_area[0][0] + game_area[1][0] \
                     and game_area[0][1] < mouse_pozition[0] < game_area[1][1] + game_area[1][1]:
                 game_table_click(tabla, mouse_pozition)
-
-
-
 
     draw(screen)
 

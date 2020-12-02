@@ -52,17 +52,12 @@ def find_point(vector, raza, valoare, size):
             st = m + 1
         elif valoare < vector[m]:
             dr = m - 1
-
         m = (st + dr) // 2
-
 
     if np.abs(vector[m] - valoare) < raza:
         return m
 
     return None
-
-
-i = 0
 
 
 def get_chenar(tabla, coordonate_mouse, r):
