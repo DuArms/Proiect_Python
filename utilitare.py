@@ -1,5 +1,4 @@
-import numpy as np
-from constants import *
+from resurse.constants import *
 
 cos = np.math.cos
 sin = np.math.sin

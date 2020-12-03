@@ -8,14 +8,14 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 
 VERDE_EXTERIOR = (9, 74, 24)
-VERDE_MIJLOC =  ( 105 , 189 ,21 )
+VERDE_MIJLOC = (105, 189, 21)
 VERDE_INTERIOR = (4, 212, 60)
 
 # Constatne tabla
 GAME_WIDTH = 1366
 GAME_HIGHT = 720
 
-NUMAR_LINII= 11
+NUMAR_LINII = 11
 NUMAR_COLOANE = 11
 
 R = 30
@@ -25,3 +25,8 @@ UNGHI_HEXAGON = 1.0471975512
 # Constante de debug
 
 SOMN = 15
+
+ZONE_ADIACENTE = list(zip(
+    [-1, -1, -1, 0, 0, 1, 1, 1],
+    [-1, 0, 1, -1, 1, -1, 0, 1]
+))

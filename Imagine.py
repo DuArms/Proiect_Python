@@ -1,4 +1,4 @@
-from constants import *
+from resurse.constants import *
 
 class Imagine:
 
