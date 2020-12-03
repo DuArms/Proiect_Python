@@ -8,8 +8,12 @@ pygame.init()
 
 game_state = GameState()
 
+for poz in np.argwhere(game_state.tabla == GameState.ZID):
+    poz = poz[0] * NUMAR_COLOANE + poz[1]
 
-
+    hexagon = droweble_table[poz][0][0]
+    hexagon1 = droweble_table[poz][1][0]
+    droweble_table[poz] = [(hexagon, RED), (hexagon1, (255, 165, 0))]
 
 
 def game_table_click(tabla, mouse_pozition):
@@ -19,7 +23,7 @@ def game_table_click(tabla, mouse_pozition):
     if poz is not None:
         x, y = poz
         # aux for debug
-        #moves = game_state.get_mouse_moves()
+        # moves = game_state.get_mouse_moves()
         #
         # for x, y in moves:
         #     poz1 = x * NUMAR_COLOANE + y
@@ -35,7 +39,7 @@ def game_table_click(tabla, mouse_pozition):
             hexagon1 = droweble_table[poz][1][0]
             droweble_table[poz] = [(hexagon, RED), (hexagon1, (255, 165, 0))]
 
-            status = play_ai(game_state , diff_lvl=2)
+            status = play_ai(game_state, diff_lvl=2)
             if type(status) == str:
                 print(status)
                 sys.exit(0)

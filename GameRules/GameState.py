@@ -1,5 +1,6 @@
 from resurse.constants import *
 
+
 class GameState:
     SOARECE = 1
     SPATIU = 0
@@ -11,6 +12,12 @@ class GameState:
 
     def __init__(self, crd_soarece=(NUMAR_LINII // 2, NUMAR_COLOANE // 2)):
         self.tabla = np.zeros((NUMAR_LINII, NUMAR_COLOANE))
+
+        for _ in range(np.random.randint(5, (NUMAR_LINII + NUMAR_COLOANE)//3)):
+            x = np.random.randint(0, NUMAR_LINII)
+            y = np.random.randint(0, NUMAR_COLOANE)
+            self.tabla[x, y] = GameState.ZID
+
         self.crd_soarece = np.array(crd_soarece)
         self.tabla[crd_soarece] = GameState.SOARECE
 
@@ -19,7 +26,7 @@ class GameState:
             return True
         return False
 
-    def get_mouse_moves(self,criteriu=None):
+    def get_mouse_moves(self, criteriu=None):
         if criteriu is None:
             criteriu = [GameState.SPATIU, GameState.VIZITAT]
 
@@ -40,7 +47,7 @@ class GameState:
         return valid_move
 
     def move_mouse(self, x, y):
-        if self.valid_move(x, y , [GameState.SPATIU, GameState.VIZITAT]):
+        if self.valid_move(x, y, [GameState.SPATIU, GameState.VIZITAT]):
             self.tabla[self.crd_soarece[0], self.crd_soarece[1]] = GameState.VIZITAT
             self.crd_soarece = np.asarray((x, y))
             self.tabla[x, y] = GameState.SOARECE
@@ -61,8 +68,6 @@ class GameState:
             return GameState.MSG_WON
 
         return None
-
-
 
 
 if __name__ == "__main__":
