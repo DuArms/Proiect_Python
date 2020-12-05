@@ -4,6 +4,7 @@ from GameGUI import *
 from GameRules.GameState import *
 from AiLogic.SelectAI import play_ai
 
+
 pygame.init()
 
 game_state = GameState()

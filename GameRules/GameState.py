@@ -13,7 +13,7 @@ class GameState:
     def __init__(self, crd_soarece=(NUMAR_LINII // 2, NUMAR_COLOANE // 2)):
         self.tabla = np.zeros((NUMAR_LINII, NUMAR_COLOANE))
 
-        for _ in range(np.random.randint(5, (NUMAR_LINII + NUMAR_COLOANE)//3)):
+        for _ in range(np.random.randint(6,3 + (NUMAR_LINII + NUMAR_COLOANE)//3)):
             x = np.random.randint(0, NUMAR_LINII)
             y = np.random.randint(0, NUMAR_COLOANE)
             self.tabla[x, y] = GameState.ZID

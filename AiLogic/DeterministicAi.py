@@ -6,7 +6,7 @@ def deterministic_logic(game_state=GameState(), mutari_posibile=None, nr_mutari=
     saved_moves = mutari_posibile
 
     maze = game_state.tabla.copy()
-    maze = np.where(maze == GameState.ZID ,1000 ,maze)
+    maze = np.where(maze == GameState.ZID, 1000, maze)
     maze = np.where(maze == GameState.VIZITAT, GameState.SPATIU, maze)
 
     sx, sy = game_state.crd_soarece
@@ -23,9 +23,11 @@ def deterministic_logic(game_state=GameState(), mutari_posibile=None, nr_mutari=
         maze[x, y] = min(d, maze[x, y])
         game_state.move_mouse(x, y)
 
-        for move in game_state.get_mouse_moves([GameState.SPATIU]):
-            mutari_posibile.append((move[0], move[1], d + 1))
+        for move in game_state.get_mouse_moves([GameState.SPATIU, GameState.VIZITAT]):
+            if maze[move[0], move[1]] == GameState.SPATIU:
+                mutari_posibile.append((move[0], move[1], d + 1))
 
+    print(maze)
     maze = np.where(maze == GameState.SPATIU, 1000, maze)
 
     busola = {
@@ -39,22 +41,25 @@ def deterministic_logic(game_state=GameState(), mutari_posibile=None, nr_mutari=
     for value in busola.values():
         if maze[value] < maze[closest_exit]:
             closest_exit = value
+        elif maze[value] == maze[closest_exit] and np.random.randint(100) < 66:
+            closest_exit = value
 
     print(maze)
 
     rez = closest_exit
     print(rez, maze[rez])
 
-    while rez not in saved_moves:
+    if maze[closest_exit] == 1000:
+        rez = saved_moves[np.random.randint(0, len(saved_moves))]
+    else:
+        while rez not in saved_moves:
+            for x, y in ZONE_ADIACENTE:
+                x, y = x + rez[0], y + rez[1]
+                if game_state.valid_move(x, y, [GameState.SPATIU, GameState.VIZITAT]):
+                    if 0 < maze[x, y]+1 == maze[rez]:
+                        rez = (x, y)
 
-        for x, y in ZONE_ADIACENTE:
-            x, y = x + rez[0], y + rez[1]
-
-            if game_state.valid_move(x, y, [GameState.SPATIU, GameState.VIZITAT]):
-                if 0 < maze[x, y] < maze[rez]:
-                    rez = (x, y)
-                    print(rez)
-
+    print(rez)
     game_state.move_mouse(sx, sy)
     game_state.tabla = saved_game_table
 
