@@ -16,7 +16,12 @@ def play_ai(game_state=GameState(), diff_lvl=1):
 
     if diff_lvl == 1:
         decision_making = random_logic
-    elif diff_lvl == 2:
+    elif diff_lvl ==2:
+        if np.random.random() < 0.5:
+            decision_making = deterministic_logic
+        else:
+            decision_making = random_logic
+    elif diff_lvl == 3:
         decision_making = deterministic_logic
 
     x, y = decision_making(game_state, moves, nr_mutari)

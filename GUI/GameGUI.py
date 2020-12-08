@@ -1,14 +1,13 @@
 from utilitare import *
-from Imagine import Imagine
+from GUI.Imagine import Imagine
+from GUI.Button import Button
 
 import pygame
-
-
 
 # Set up the drawing window
 screen = pygame.display.set_mode([GAME_WIDTH, GAME_HIGHT])
 
-poza_soarece = pygame.image.load("resurse/rat.png")
+poza_soarece = pygame.image.load("./resurse/rat.png")
 poza_soarece = pygame.transform.scale(poza_soarece, (52, 52))
 
 r = R
@@ -42,7 +41,23 @@ menu_area = [
     (300, game_area[1][1])
 ]
 
+menu_width = menu_area[1][0]
+menu_hight = menu_area[1][1]
+
+button_size = (menu_width * 0.90, menu_hight * (1 / 8))
+buttons = []
+
+pos = menu_area[0]
+
+text = ["P Vs P " , "P Vs EASY AI" , "P Vs MEDIUM AI" , "P Vs HARD AI", "RESET"]
+functii = [None,None,None,None,None]
+
+for text ,cbf in zip(text,functii):
+    buttons.append(Button(pos, BLUE, text, button_size, cbf))
+    pos = pos + [0 ,button_size[1] + 10]
+
 clock = pygame.time.Clock()
+
 
 def draw(screen):
     # Fill the background with white
@@ -55,10 +70,12 @@ def draw(screen):
         for poly, culoare in value:
             pygame.draw.polygon(screen, culoare, poly)
 
-    #Deseneaza meniu
-    pygame.draw.rect(screen, BLUE, menu_area, 2)
+    # Deseneaza meniu
+    #pygame.draw.rect(screen, BLUE, menu_area, 2)
 
-    pygame.draw.circle(screen, RED, menu_area[0], r * 0.95)
+    for bt in buttons:
+        bt.draw(screen)
+
 
     # Deseneaza soarece
     screen.blit(soarece.img, soarece.get_pos_2_draw())

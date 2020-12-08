@@ -1,6 +1,6 @@
 import sys
 
-from GameGUI import *
+from GUI.GameGUI import *
 from GameRules.GameState import *
 from AiLogic.SelectAI import play_ai
 
@@ -23,15 +23,6 @@ def game_table_click(tabla, mouse_pozition):
     poz = get_chenar(tabla, mouse_pozition, r)
     if poz is not None:
         x, y = poz
-        # aux for debug
-        # moves = game_state.get_mouse_moves()
-        #
-        # for x, y in moves:
-        #     poz1 = x * NUMAR_COLOANE + y
-        #
-        #     hexagon = droweble_table[poz1][0][0]
-        #     hexagon1 = droweble_table[poz1][1][0]
-        #     droweble_table[poz1] = [(hexagon, BLUE), (hexagon1, (0, 0, 165))]
 
         if game_state.build_wall(x, y):
             poz = poz[0] * NUMAR_COLOANE + poz[1]
@@ -50,6 +41,12 @@ def game_table_click(tabla, mouse_pozition):
 
             print(game_state.tabla)
 
+def menu_click(mouse_pozition):
+    for bt in buttons:
+        if  bt.check_if_clicked(mouse_pozition):
+            print(bt.text)
+
+
 
 # Run until the user asks to quit
 running = True
@@ -64,8 +61,12 @@ while running:
             mouse_pozition = pygame.mouse.get_pos()
 
             if game_area[0][0] < mouse_pozition[0] < game_area[0][0] + game_area[1][0] \
-                    and game_area[0][1] < mouse_pozition[0] < game_area[1][1] + game_area[1][1]:
+                    and game_area[0][1] < mouse_pozition[1] < game_area[1][1] + game_area[1][1]:
                 game_table_click(tabla, mouse_pozition)
+
+            if menu_area[0][0] < mouse_pozition[0] < menu_area[0][0] + menu_area[1][0] \
+                    and menu_area[0][1] < mouse_pozition[1] < menu_area[1][1] + menu_area[1][1]:
+                menu_click(mouse_pozition)
 
     draw(screen)
 
