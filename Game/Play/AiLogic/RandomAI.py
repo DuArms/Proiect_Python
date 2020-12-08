@@ -1,4 +1,4 @@
-from GameRules.GameState import  *
+from Game.Rules.GameState import  *
 
 
 def random_logic(game_state, mutari_posibile, nr_mutari):

@@ -1,7 +1,10 @@
+import numpy as np
 from resurse.constants import *
 
 cos = np.math.cos
 sin = np.math.sin
+
+
 
 
 def poly_points(point=(0, 0), raza=100, n=6):
@@ -15,7 +18,7 @@ def poly_points(point=(0, 0), raza=100, n=6):
     return corners
 
 
-def generate_table(staring_point=(0, 0), raza=25):
+def calc_hex_crd(staring_point=(0, 0), raza=25):
     tabla = []
     coordonate_centru_tabla = []
     l_adjust = raza * cos(UNGHI_HEXAGON)
@@ -75,3 +78,8 @@ def get_chenar(tabla, coordonate_mouse, r):
         return None
 
     return (index_linie, index_coloana)
+
+
+def in_pyrect(area, mouse_pozition):
+    return area[0][0] < mouse_pozition[0] < area[0][0] + area[1][0] \
+           and area[0][1] < mouse_pozition[1] < area[1][1] + area[1][1]

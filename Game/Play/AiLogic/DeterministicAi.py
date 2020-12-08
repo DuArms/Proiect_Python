@@ -1,4 +1,4 @@
-from GameRules.GameState import *
+from Game.Rules.GameState import *
 
 
 def deterministic_logic(game_state=GameState(), mutari_posibile=None, nr_mutari=None):
@@ -27,7 +27,7 @@ def deterministic_logic(game_state=GameState(), mutari_posibile=None, nr_mutari=
             if maze[move[0], move[1]] == GameState.SPATIU:
                 mutari_posibile.append((move[0], move[1], d + 1))
 
-    print(maze)
+    #print(maze)
     maze = np.where(maze == GameState.SPATIU, 1000, maze)
 
     busola = {
@@ -44,10 +44,10 @@ def deterministic_logic(game_state=GameState(), mutari_posibile=None, nr_mutari=
         elif maze[value] == maze[closest_exit] and np.random.randint(100) < 66:
             closest_exit = value
 
-    print(maze)
+    #print(maze)
 
     rez = closest_exit
-    print(rez, maze[rez])
+    #print(rez, maze[rez])
 
     if maze[closest_exit] == 1000:
         rez = saved_moves[np.random.randint(0, len(saved_moves))]
@@ -59,7 +59,7 @@ def deterministic_logic(game_state=GameState(), mutari_posibile=None, nr_mutari=
                     if 0 < maze[x, y]+1 == maze[rez]:
                         rez = (x, y)
 
-    print(rez)
+    #print(rez)
     game_state.move_mouse(sx, sy)
     game_state.tabla = saved_game_table
 

@@ -1,7 +1,8 @@
-from utilitare import *
-from GUI.Imagine import Imagine
-from GUI.Button import Button
+from resurse.utilitare import calc_hex_crd
+from GUI.PrimitiveGrafice.Imagine import Imagine
+from GUI.PrimitiveGrafice.Button import Button
 
+from  UserInteraction.Parametrii import *
 import pygame
 
 # Set up the drawing window
@@ -13,27 +14,20 @@ poza_soarece = pygame.transform.scale(poza_soarece, (52, 52))
 r = R
 p = [250, r]
 
-tabla = generate_table(p, r)
+hex_crd = calc_hex_crd(p, r)
 
 soarece = Imagine(
     poza_soarece,
-    tabla[NUMAR_LINII // 2, NUMAR_COLOANE // 2]
+    hex_crd[NUMAR_LINII // 2, NUMAR_COLOANE // 2]
 )
 
-droweble_table = []
+imgs = [soarece]
 
-for line in tabla:
-    for hex in line:
-        p = [
-            (poly_points(hex, r), VERDE_EXTERIOR),
-            (poly_points(hex, r * 0.80), VERDE_MIJLOC),
-            (poly_points(hex, r * 0.50), VERDE_INTERIOR)
-        ]
-        droweble_table.append(p)
+draweble_table = []
 
 game_area = [
-    tabla[0, 0] + [-5 / 2 * r, -3 / 2 * r],
-    tabla[-1, -1] + [-7 / 2 * r, +1 / 2 * r]
+    hex_crd[0, 0] + [-5 / 2 * r, -3 / 2 * r],
+    hex_crd[-1, -1] + [-7 / 2 * r, +1 / 2 * r]
 ]
 
 menu_area = [
@@ -47,19 +41,18 @@ menu_hight = menu_area[1][1]
 button_size = (menu_width * 0.90, menu_hight * (1 / 8))
 buttons = []
 
-pos = menu_area[0]
-
-text = ["P Vs P " , "P Vs EASY AI" , "P Vs MEDIUM AI" , "P Vs HARD AI", "RESET"]
-functii = [None,None,None,None,None]
-
-for text ,cbf in zip(text,functii):
-    buttons.append(Button(pos, BLUE, text, button_size, cbf))
-    pos = pos + [0 ,button_size[1] + 10]
 
 clock = pygame.time.Clock()
 
 
-def draw(screen):
+def set_wall(droweble_table, poz):
+    poz = poz[0] * NUMAR_COLOANE + poz[1]
+    hexagon = droweble_table[poz][0][0]
+    hexagon1 = droweble_table[poz][1][0]
+    droweble_table[poz] = [(hexagon, RED), (hexagon1, ORENGE)]
+
+
+def draw(screen, droweble_table, buttons ,imgs):
     # Fill the background with white
     screen.fill(WHITE)
 
@@ -71,16 +64,17 @@ def draw(screen):
             pygame.draw.polygon(screen, culoare, poly)
 
     # Deseneaza meniu
-    #pygame.draw.rect(screen, BLUE, menu_area, 2)
+    # pygame.draw.rect(screen, BLUE, menu_area, 2)
 
     for bt in buttons:
         bt.draw(screen)
 
-
     # Deseneaza soarece
-    screen.blit(soarece.img, soarece.get_pos_2_draw())
+    for img in imgs:
+        screen.blit(img.img, img.get_pos_2_draw())
 
     # screen.blit(text,  menu_area[0 ])
 
     pygame.display.flip()
+
     clock.tick(60)

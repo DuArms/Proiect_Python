@@ -6,6 +6,7 @@ BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
+ORENGE = (255, 165, 0)
 
 VERDE_EXTERIOR = (9, 74, 24)
 VERDE_MIJLOC = (105, 189, 21)
@@ -25,6 +26,13 @@ UNGHI_HEXAGON = 1.0471975512
 # Constante de debug
 
 SOMN = 15
+#Constante de joc
+
+HARD_AI = 3
+MEDIUM_AI = 2
+EASY_AI = 1
+PVP = 0
+RESET = -1
 
 ZONE_ADIACENTE = list(zip(
     [-1, -1, -1, 0, 0, 1, 1, 1],

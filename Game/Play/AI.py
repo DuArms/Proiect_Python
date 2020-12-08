@@ -1,6 +1,6 @@
-from GameRules.GameState import *
-from AiLogic.RandomAI import random_logic
-from AiLogic.DeterministicAi import deterministic_logic
+from Game.Rules.GameState import *
+from Game.Play.AiLogic.RandomAI import random_logic
+from Game.Play.AiLogic.DeterministicAi import deterministic_logic
 
 
 def play_ai(game_state=GameState(), diff_lvl=1):
