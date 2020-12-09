@@ -1,8 +1,8 @@
 from resurse.utilitare import calc_hex_crd
 from GUI.PrimitiveGrafice.Imagine import Imagine
 from GUI.PrimitiveGrafice.Button import Button
+from resurse.constants import *
 
-from  UserInteraction.Parametrii import *
 import pygame
 
 # Set up the drawing window

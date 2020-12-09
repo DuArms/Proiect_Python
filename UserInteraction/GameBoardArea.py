@@ -1,6 +1,3 @@
-import pygame
-
-from resurse.constants import *
 from resurse.utilitare import *
 
 from Game.Play.AI import play_ai
@@ -9,31 +6,34 @@ from Game.Play.PvP import pvp
 from Game.Rules.GameState import GameState
 from GUI.GameGUI import *
 
-from UserInteraction.Parametrii import *
+
 import sys
 
+opponent_lvl = MEDIUM_AI
+tura = 1
 
 def end_game(status):
     print("end game", status)
     sys.exit(0)
 
 
-def game_table_click(hex_crd, mouse_pozition):
-    global r, tura, draweble_table,oponent_lvl
+def game_table_click(hex_crd, mouse_pozition,opponent_lvl):
+    global r, tura, draweble_table
     poz = get_chenar(hex_crd, mouse_pozition, r)
+
     if poz is not None:
         x, y = poz
 
-        if oponent_lvl == PVP:
-            status = pvp(game_state, poz)
+        if opponent_lvl == PVP:
+            status,tura = pvp(game_state, poz,tura)
             if status is not None:
                 end_game(status)
 
         else:  # Oponentul este un AI
             if game_state.build_wall(x, y):
                 set_wall(draweble_table, poz)
-                print(oponent_lvl)
-                status = play_ai(game_state, diff_lvl=oponent_lvl)
+
+                status = play_ai(game_state, diff_lvl=opponent_lvl)
 
                 if type(status) == str:
                     end_game(status)
@@ -42,7 +42,6 @@ def game_table_click(hex_crd, mouse_pozition):
 
 
 def init_game():
-    print("I AM CALLED")
     pygame.init()
 
     global game_state

@@ -1,4 +1,4 @@
-from UserInteraction.GameBoardArea import *
+
 from UserInteraction.MenuArea import *
 
 
@@ -18,11 +18,11 @@ if __name__ == "__main__":
                 mouse_pozition = pygame.mouse.get_pos()
 
                 if    in_pyrect(game_area,mouse_pozition):
-                    game_table_click(hex_crd, mouse_pozition)
+                    game_table_click(hex_crd, mouse_pozition,opponent_lvl)
 
                 if  in_pyrect(menu_area,mouse_pozition):
-                  draweble_table = menu_click(mouse_pozition,buttons,draweble_table)
-                    # init_game()
+                  draweble_table , opponent_lvl = menu_click(mouse_pozition,buttons,draweble_table)
+
 
         draw(screen, draweble_table, buttons, imgs)
 

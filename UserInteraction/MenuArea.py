@@ -1,29 +1,24 @@
-from UserInteraction.Parametrii import *
-from GUI.GameGUI import *
 from UserInteraction.GameBoardArea import *
 
 
 def chenge_to_pvp():
-    global oponent_lvl
+    global opponent_lvl
     global external_function_call
-    oponent_lvl = PVP
+    opponent_lvl = PVP
     return "RESET"
 
 
 def chenge_to_hard_ai():
-    global oponent_lvl
-    oponent_lvl = HARD_AI
+    return HARD_AI
 
 
 
 def chenge_to_medium_ai():
-    global oponent_lvl
-    oponent_lvl = MEDIUM_AI
+    return MEDIUM_AI
 
 
 def chenge_to_easy_ai():
-    global oponent_lvl
-    oponent_lvl = EASY_AI
+   return EASY_AI
 
 
 def reset():
@@ -42,15 +37,15 @@ for text, cbf in zip(text, functii):
 
 
 def menu_click(mouse_pozition, buttons, draweble_table):
-    global  imgs , oponent_lvl
+    global  imgs , opponent_lvl
     for bt in buttons:
         if bt.check_if_clicked(mouse_pozition):
-            print(bt.text)
-            if "RESET" == bt.call_fn():
+            result = bt.call_fn()
+            if "RESET" == result:
                 imgs[0].position = hex_crd[NUMAR_LINII // 2, NUMAR_COLOANE // 2]
                 draweble_table = init_game()
+            elif type(result) == int:
+                opponent_lvl = result
 
 
-            print(oponent_lvl)
-
-    return draweble_table
+    return draweble_table ,opponent_lvl
