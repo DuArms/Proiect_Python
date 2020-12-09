@@ -12,4 +12,5 @@ https://www.mathplayground.com/logic_trap_the_mouse.html
 
 INPUT: TrapTheMouse.py <tip adversar>
 
-OUTPUT: Interfata grafica cu tabla hexagonala similară cu cea din joc. După terminarea
+OUTPUT: Interfata grafica cu tabla hexagonala similară cu cea din joc. 
+După terminarea jocului se va afișa un mesaj corespunzător.
