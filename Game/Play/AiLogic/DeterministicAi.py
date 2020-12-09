@@ -2,6 +2,14 @@ from Game.Rules.GameState import *
 
 
 def deterministic_logic(game_state=GameState(), mutari_posibile=None, nr_mutari=None):
+    '''
+    Determina cea mai scurta cale spre marginea tablei.
+
+    :param game_state:
+    :param mutari_posibile:
+    :param nr_mutari:
+    :return mutare:
+    '''
     saved_game_table = game_state.tabla.copy()
     saved_moves = mutari_posibile
 

@@ -4,10 +4,14 @@ from resurse.constants import *
 cos = np.math.cos
 sin = np.math.sin
 
-
-
-
 def poly_points(point=(0, 0), raza=100, n=6):
+    '''
+    Genereaza coordonatele colturilor unui poligon
+    :param point:
+    :param raza:
+    :param n:
+    :return:
+    '''
     corners = []
     starting_angle = 2 * PI / n
     for i in range(n):
@@ -19,6 +23,13 @@ def poly_points(point=(0, 0), raza=100, n=6):
 
 
 def calc_hex_crd(staring_point=(0, 0), raza=25):
+    '''
+    Calculeaza coordonatele colturilor unui hexagon pentru a
+    fi desenabil pe ecran
+    :param staring_point:
+    :param raza:
+    :return:
+    '''
     tabla = []
     coordonate_centru_tabla = []
     l_adjust = raza * cos(UNGHI_HEXAGON)
@@ -45,6 +56,15 @@ def calc_hex_crd(staring_point=(0, 0), raza=25):
 
 
 def find_point(vector, raza, valoare, size):
+    '''
+    Functie auxiliara pentru gasirea hexagonului pe care
+    a fost dat click.
+    :param vector:
+    :param raza:
+    :param valoare:
+    :param size:
+    :return:
+    '''
     m = size // 2
     st = 0
     dr = size - 1
@@ -63,6 +83,14 @@ def find_point(vector, raza, valoare, size):
 
 
 def get_chenar(tabla, coordonate_mouse, r):
+    '''
+    Functie ce retuneaza indexii hexagonului pe care
+    a fost dat click
+    :param tabla:
+    :param coordonate_mouse:
+    :param r:
+    :return:
+    '''
     r *= 0.90
     table_y = [int(linie[0][1]) for linie in tabla]
 
@@ -81,5 +109,11 @@ def get_chenar(tabla, coordonate_mouse, r):
 
 
 def in_pyrect(area, mouse_pozition):
+    '''
+    Verifica daca clickul a fost dat intr-un chenar
+    :param area:
+    :param mouse_pozition:
+    :return:
+    '''
     return area[0][0] < mouse_pozition[0] < area[0][0] + area[1][0] \
            and area[0][1] < mouse_pozition[1] < area[1][1] + area[1][1]

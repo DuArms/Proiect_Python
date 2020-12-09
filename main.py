@@ -1,7 +1,12 @@
 
 from UserInteraction.MenuArea import *
 
+# pygame.mixer.init()
+# pygame.mixer.music.load("./resurse/song.mp3")
+# pygame.mixer.music.play(-1)
 
+pygame.display.set_caption("TrapTheMouse")
+pygame.display.set_icon(GameGUI.poza_soarece)
 
 if __name__ == "__main__":
     draweble_table = init_game()
@@ -17,14 +22,13 @@ if __name__ == "__main__":
             if event.type == pygame.MOUSEBUTTONUP:
                 mouse_pozition = pygame.mouse.get_pos()
 
-                if    in_pyrect(game_area,mouse_pozition):
-                    game_table_click(hex_crd, mouse_pozition,opponent_lvl)
+                if    in_pyrect(game_gui.game_area,mouse_pozition):
+                    game_table_click(game_gui, mouse_pozition,opponent_lvl)
 
-                if  in_pyrect(menu_area,mouse_pozition):
-                  draweble_table , opponent_lvl = menu_click(mouse_pozition,buttons,draweble_table)
+                if  in_pyrect(game_gui.menu_area,mouse_pozition):
+                  game_gui , opponent_lvl = menu_click(mouse_pozition,game_gui)
 
-
-        draw(screen, draweble_table, buttons, imgs)
+        game_gui.draw()
 
     # print(pygame.mouse.get_pos())
 

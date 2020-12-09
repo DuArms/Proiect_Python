@@ -22,11 +22,13 @@ class GameState:
         self.tabla[crd_soarece] = GameState.SOARECE
 
     def valid_move(self, x, y, poz_libere=None):
+        ''' Valideaza daca o mutare este legala'''
         if 0 <= x < NUMAR_LINII and 0 <= y < NUMAR_COLOANE and self.tabla[x, y] in poz_libere:
             return True
         return False
 
     def get_mouse_moves(self, criteriu=None):
+        ''' Returneaza toate mutarile valide pentru soarece'''
         if criteriu is None:
             criteriu = [GameState.SPATIU, GameState.VIZITAT]
 
@@ -47,6 +49,12 @@ class GameState:
         return valid_move
 
     def move_mouse(self, x, y):
+        '''
+        Realizeaza miscarea soarecelui pe tabla
+        :param x:
+        :param y:
+        :return:
+        '''
         if self.valid_move(x, y, [GameState.SPATIU, GameState.VIZITAT]):
             self.tabla[self.crd_soarece[0], self.crd_soarece[1]] = GameState.VIZITAT
             self.crd_soarece = np.asarray((x, y))
@@ -56,12 +64,23 @@ class GameState:
         return False
 
     def build_wall(self, x, y):
+        '''
+        Construieste un zid pe harta
+        :param x:
+        :param y:
+        :return:
+        '''
         if self.valid_move(x, y, [GameState.VIZITAT, GameState.SPATIU]):
             self.tabla[x, y] = GameState.ZID
             return True
         return False
 
     def is_game_done(self, numar_mutari):
+        '''
+        Verifica daca jocul s-a terminat
+        :param numar_mutari:
+        :return:
+        '''
         if self.crd_soarece[0] in [0, NUMAR_LINII - 1] or self.crd_soarece[1] in [0, NUMAR_COLOANE - 1]:
             return GameState.MSG_LOST
         if numar_mutari == 0:

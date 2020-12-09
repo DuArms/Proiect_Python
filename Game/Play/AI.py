@@ -4,6 +4,13 @@ from Game.Play.AiLogic.DeterministicAi import deterministic_logic
 
 
 def play_ai(game_state=GameState(), diff_lvl=1):
+    '''
+    Functie ce menegeriaza nivelul de dificultate
+    al jocului
+    :param game_state:
+    :param diff_lvl:
+    :return mutare:
+    '''
     moves = game_state.get_mouse_moves()
     nr_mutari = len(moves)
 
